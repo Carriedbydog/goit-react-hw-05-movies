@@ -4,18 +4,15 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import { fetchMovieById, fetchMovies } from 'services/api';
 
 const HomePage = () => {
-  const { movieId } = useParams();
   const { data: movies } = useHttp(fetchMovies);
 
-  const { data: movieById } = useHttp(fetchMovieById, movieId);
-  console.log(movieId);
   return (
     <div>
       <ol>
         {movies.map(({ id, title }) => {
           return (
             <li key={id}>
-              <Link to={id.toString()}>{title}</Link>
+              <Link to={`/movies/${id.toString()}`}>{title}</Link>
             </li>
           );
         })}

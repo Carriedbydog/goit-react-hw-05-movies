@@ -4,12 +4,16 @@ import { useParams } from 'react-router-dom';
 import { fetchMovieById } from 'services/api';
 
 const SingleMovie = () => {
-  const { id } = useParams();
+  const { movieId } = useParams();
 
-  const { data: movie } = useHttp(fetchMovieById, id);
+  const { data: movie } = useHttp(fetchMovieById, movieId);
   console.log(movie);
-
-  return <div>dsadsadsa</div>;
+  const { poster_path, title } = movie;
+  return (
+    <div>
+      <img src={`http://image.tmdb.org/t/p/w185${poster_path}`} alt={title} />
+    </div>
+  );
 };
 
 export default SingleMovie;
