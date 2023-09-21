@@ -1,36 +1,44 @@
 import axios from 'axios';
 
-export const fetchMovies = async params => {
-  return await axios
-    .get('https://api.themoviedb.org/3/trending/movie/day', {
-      params: {
-        language: 'en-US',
-        api_key: '078d063375fca7107accae9f7c2444d5',
-        ...params,
-      },
-    })
-    .then(({ status, message, data }) => {
-      if (status !== 200) {
-        throw new Error(message);
-      }
-      return data.results;
-    });
+axios.defaults.headers = {
+  Authorization:
+    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNzhkMDYzMzc1ZmNhNzEwN2FjY2FlOWY3YzI0NDRkNSIsInN1YiI6IjY1MDljYzg5OGE4OGIyMDEwMDBhY2Q4NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pv4bnwVeOFplFlUCjwV02RANqXBPJKRQWTVcfRVL0IU',
+  accept: 'application/json',
+};
+axios.defaults.params = {
+  language: 'en-US',
 };
 
-export const fetchMovieById = async (id, params) => {
-  return await axios
-    .get(`https://api.themoviedb.org/3/movie/${id}`, {
-      params: {
-        language: 'en-US',
-        api_key: '078d063375fca7107accae9f7c2444d5',
-        ...params,
-      },
-    })
-    .then(({ status, message, data }) => {
-      if (status !== 200) {
-        throw new Error(message);
-      }
-      console.log(data);
-      return data;
-    });
+export const fetchMovies = async () => {
+  const { data } = await axios.get(
+    'https://api.themoviedb.org/3/trending/movie/day'
+  );
+
+  return data.results;
+};
+
+export const fetchMovieById = async id => {
+  const { data } = await axios.get(`https://api.themoviedb.org/3/movie/${id}`);
+  return data;
+};
+
+export const fetchMovieCast = async id => {
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/credits`
+  );
+  return data.cast;
+};
+
+export const fetchMovieReviews = async id => {
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/reviews`
+  );
+  return data.results;
+};
+
+export const fetchMovieByQuery = async query => {
+  const { data } = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${query}`
+  );
+  return data.results;
 };
