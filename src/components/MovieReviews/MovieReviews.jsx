@@ -2,31 +2,42 @@ import { useHttp } from 'hooks/useHttp';
 import React, { Suspense } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { fetchMovieReviews } from 'services/api';
+import {
+  StyledAuhtorName,
+  StyledComment,
+  StyledContent,
+  StyledItemReview,
+  StyledReviewList,
+  StyledReviewWrapper,
+} from './MovieReviews.style';
 
 const MovieReviews = () => {
   const { movieId } = useParams();
   const [data] = useHttp(fetchMovieReviews, movieId);
 
   return (
-    <>
+    <StyledReviewWrapper>
       {!data.length ? (
         <h1>There are no reviews for this movie</h1>
       ) : (
-        <ul>
+        <StyledReviewList>
           {data?.map(({ author, content, id }) => (
-            <li key={id}>
-              <h2>{author}</h2>
-              <p>{content}</p>
-            </li>
+            <StyledItemReview key={id}>
+              <StyledAuhtorName>{author}</StyledAuhtorName>
+              <hr />
+              <StyledComment>
+                Comment: <StyledContent>{content}</StyledContent>
+              </StyledComment>
+            </StyledItemReview>
           ))}
-        </ul>
+        </StyledReviewList>
       )}
       <div>
         <Suspense fallback={<h1>Loading...</h1>}>
           <Outlet />
         </Suspense>
       </div>
-    </>
+    </StyledReviewWrapper>
   );
 };
 

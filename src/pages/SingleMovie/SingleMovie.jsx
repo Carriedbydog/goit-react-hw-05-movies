@@ -1,14 +1,26 @@
 import { useHttp } from 'hooks/useHttp';
 import React, { Suspense, useRef } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMovieById } from 'services/api';
-import styled from 'styled-components';
+import {
+  StyledAddInfo,
+  StyledBackLink,
+  StyledBackWrapper,
+  StyledContentBox,
+  StyledDescr,
+  StyledGenres,
+  StyledList,
+  StyledMovieTitle,
+  StyledSpan,
+  StyledTagline,
+  StyledWrapper,
+} from './SingleMovie.styled';
 
 const SingleMovie = () => {
   const { movieId } = useParams();
 
   const [data] = useHttp(fetchMovieById, movieId);
-
+  console.log(data);
   const {
     poster_path,
     title,
@@ -29,7 +41,9 @@ const SingleMovie = () => {
 
   return (
     <>
-      <Link to={backLink.current}>Go back</Link>
+      <StyledBackWrapper>
+        <StyledBackLink to={backLink.current}>Go back</StyledBackLink>
+      </StyledBackWrapper>
       <StyledWrapper>
         {poster_path ? (
           <img
@@ -43,29 +57,48 @@ const SingleMovie = () => {
           />
         )}
 
-        <div>
-          <h1>{title}</h1>
-          {data.tagline ? <p>Tagline: "{tagline}"</p> : null}
+        <StyledContentBox>
+          <StyledMovieTitle>{title}</StyledMovieTitle>
+          {data.tagline ? (
+            <StyledDescr>
+              Tagline: <StyledTagline>"{tagline}"</StyledTagline>
+            </StyledDescr>
+          ) : null}
 
-          {data.vote_average ? <p>Viewers rating: {vote_average}</p> : null}
-          <p>Date of release: {release_date}</p>
+          {data.vote_average ? (
+            <StyledDescr>
+              Viewers rating: <StyledSpan>{vote_average}</StyledSpan>
+            </StyledDescr>
+          ) : null}
+
           <StyledGenres>
             Genres:
             <div>
               {genres?.map(genre => (
-                <p key={genre.id}> {genre.name}</p>
+                <StyledDescr key={genre.id}>
+                  <StyledSpan>{genre.name}</StyledSpan>
+                </StyledDescr>
               ))}
             </div>
           </StyledGenres>
-          {data.budget ? <p>Budget: ${budget}</p> : null}
-          <p>Overview: {overview}</p>
-        </div>
+          {data.budget ? (
+            <StyledDescr>
+              Budget: <StyledSpan>${budget}</StyledSpan>
+            </StyledDescr>
+          ) : null}
+          <StyledDescr>
+            Overview: <StyledSpan>{overview}</StyledSpan>
+          </StyledDescr>
+          <StyledDescr>
+            Date of release: <StyledSpan>{release_date}</StyledSpan>
+          </StyledDescr>
+        </StyledContentBox>
       </StyledWrapper>
       <hr />
-      <h2>Additional information</h2>
+      <StyledAddInfo>Additional information</StyledAddInfo>
       <StyledList>
-        <Link to={'cast'}>Cast</Link>
-        <Link to={'reviews'}>Reviews</Link>
+        <StyledBackLink to={'cast'}>Cast</StyledBackLink>
+        <StyledBackLink to={'reviews'}>Reviews</StyledBackLink>
       </StyledList>
       <hr />
       <div>
@@ -78,21 +111,3 @@ const SingleMovie = () => {
 };
 
 export default SingleMovie;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  gap: 20px;
-  padding: 10px 15px;
-`;
-
-const StyledGenres = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-`;
-
-const StyledList = styled.ul`
-  display: flex;
-
-  gap: 10px;
-`;

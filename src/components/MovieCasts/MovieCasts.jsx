@@ -2,7 +2,7 @@ import { useHttp } from 'hooks/useHttp';
 import React, { Suspense } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { fetchMovieCast } from 'services/api';
-import styled from 'styled-components';
+import { StyledChar, StyledCharName, StyledList } from './MovieCasts.styled';
 
 const MovieCats = () => {
   const { movieId } = useParams();
@@ -34,7 +34,9 @@ const MovieCats = () => {
               )}
 
               <h2>{name}</h2>
-              <p>Character: {character}</p>
+              <StyledChar>
+                Character: <StyledCharName>{character}</StyledCharName>
+              </StyledChar>
             </li>
           ))}
         </StyledList>
@@ -49,16 +51,3 @@ const MovieCats = () => {
 };
 
 export default MovieCats;
-
-const StyledList = styled.ul`
-  display: grid;
-  max-width: calc(100vw - 48px);
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 16px;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 0;
-  list-style: none;
-  margin-left: auto;
-  margin-right: auto;
-`;

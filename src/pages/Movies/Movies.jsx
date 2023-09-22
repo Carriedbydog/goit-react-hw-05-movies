@@ -3,7 +3,14 @@ import React, { Suspense, useState } from 'react';
 import { fetchMovieByQuery } from 'services/api';
 import { useForm } from 'react-hook-form';
 import { Link, Outlet, useLocation, useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  StyledButton,
+  StyledInput,
+  StyledItem,
+  StyledWrapper,
+} from './Movies.styled';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,8 +24,16 @@ const Movies = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = e => {
     if (!queryStr) {
-      // toast
-      return;
+      return toast.warn('Please fill movie in the field', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
 
     setSearchParams(queryStr.trim() ? { query: queryStr.trim() } : {});
@@ -29,20 +44,20 @@ const Movies = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+        <StyledInput
           type="text"
           autoFocus
           {...register('queryStr')}
           value={queryStr}
           onChange={e => setQueryStr(e.target.value)}
         />
-        <button>Search</button>
+        <StyledButton>Search</StyledButton>
       </form>
 
       <StyledWrapper>
         {data?.map(({ poster_path, title, id }) => {
           return (
-            <li key={id}>
+            <StyledItem key={id}>
               <Link state={{ from: location }} to={`${id.toString()}`}>
                 {poster_path ? (
                   <img
@@ -61,7 +76,7 @@ const Movies = () => {
                 )}
                 <h2>{title}</h2>
               </Link>
-            </li>
+            </StyledItem>
           );
         })}
       </StyledWrapper>
@@ -70,24 +85,13 @@ const Movies = () => {
       {!data.length && query && !loading ? (
         <h2>Oops...nothing there, try another movie</h2>
       ) : null}
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <Outlet />
-      </Suspense>
+      <div>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
+      </div>
     </div>
   );
 };
 
 export default Movies;
-
-const StyledWrapper = styled.div`
-  display: grid;
-  max-width: calc(100vw - 48px);
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 16px;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 0;
-  list-style: none;
-  margin-left: auto;
-  margin-right: auto;
-`;

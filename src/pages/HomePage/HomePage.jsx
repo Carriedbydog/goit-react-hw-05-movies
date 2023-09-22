@@ -1,7 +1,8 @@
 import { useHttp } from 'hooks/useHttp';
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { fetchMovies } from 'services/api';
+import { StyledILi, StyledItemLink } from './HomePage.styled';
 
 const HomePage = () => {
   const [data] = useHttp(fetchMovies);
@@ -11,9 +12,11 @@ const HomePage = () => {
       <ol>
         {data.map(({ id, title }) => {
           return (
-            <li key={id}>
-              <Link to={`/movies/${id.toString()}`}>{title}</Link>
-            </li>
+            <StyledILi key={id}>
+              <StyledItemLink to={`/movies/${id.toString()}`}>
+                {title}
+              </StyledItemLink>
+            </StyledILi>
           );
         })}
       </ol>
