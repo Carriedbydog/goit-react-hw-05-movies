@@ -1,6 +1,6 @@
 import { useHttp } from 'hooks/useHttp';
-import React from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import React, { Suspense, useRef } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { fetchMovieById } from 'services/api';
 import styled from 'styled-components';
 
@@ -20,8 +20,16 @@ const SingleMovie = () => {
     budget,
   } = data;
 
+  const location = useLocation();
+  const backLink = useRef(location.state?.from || '/');
+
+  if (!Object.keys(data).length) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <>
+      <Link to={backLink.current}>Go back</Link>
       <StyledWrapper>
         {poster_path ? (
           <img
@@ -61,7 +69,9 @@ const SingleMovie = () => {
       </StyledList>
       <hr />
       <div>
-        <Outlet />
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
       </div>
     </>
   );

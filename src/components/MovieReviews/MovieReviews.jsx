@@ -1,6 +1,6 @@
 import { useHttp } from 'hooks/useHttp';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Outlet, useParams } from 'react-router-dom';
 import { fetchMovieReviews } from 'services/api';
 
 const MovieReviews = () => {
@@ -9,7 +9,7 @@ const MovieReviews = () => {
 
   return (
     <>
-      {data.length === 0 ? (
+      {!data.length ? (
         <h1>There are no reviews for this movie</h1>
       ) : (
         <ul>
@@ -21,6 +21,11 @@ const MovieReviews = () => {
           ))}
         </ul>
       )}
+      <div>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
+      </div>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import { useHttp } from 'hooks/useHttp';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Outlet, useParams } from 'react-router-dom';
 import { fetchMovieCast } from 'services/api';
 import styled from 'styled-components';
 
@@ -8,6 +8,9 @@ const MovieCats = () => {
   const { movieId } = useParams();
   const [data] = useHttp(fetchMovieCast, movieId);
 
+  if (!Object.keys(data).length) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div>
       {data.length === 0 ? (
@@ -36,6 +39,11 @@ const MovieCats = () => {
           ))}
         </StyledList>
       )}
+      <div>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Outlet />
+        </Suspense>
+      </div>
     </div>
   );
 };
