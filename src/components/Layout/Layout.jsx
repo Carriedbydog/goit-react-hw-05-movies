@@ -6,6 +6,7 @@ import {
   StyledNavList,
 } from './Layout.styled';
 import { Suspense } from 'react';
+import { Loader } from 'components/Loader/Loader';
 
 const Layout = () => {
   return (
@@ -23,7 +24,7 @@ const Layout = () => {
         </StyledNav>
       </StyledNavHeader>
       <div>
-        <Suspense>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </div>

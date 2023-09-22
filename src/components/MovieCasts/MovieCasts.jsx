@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { fetchMovieCast } from 'services/api';
 import { StyledChar, StyledCharName, StyledList } from './MovieCasts.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const MovieCats = () => {
   const { movieId } = useParams();
@@ -42,7 +43,7 @@ const MovieCats = () => {
         </StyledList>
       )}
       <div>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </div>

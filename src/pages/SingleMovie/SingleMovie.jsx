@@ -15,6 +15,7 @@ import {
   StyledTagline,
   StyledWrapper,
 } from './SingleMovie.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const SingleMovie = () => {
   const { movieId } = useParams();
@@ -102,7 +103,7 @@ const SingleMovie = () => {
       </StyledList>
       <hr />
       <div>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </div>

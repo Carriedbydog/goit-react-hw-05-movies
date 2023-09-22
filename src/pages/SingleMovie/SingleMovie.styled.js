@@ -74,3 +74,7 @@ export const StyledSpan = styled.span`
 export const StyledAddInfo = styled.h2`
   margin-left: 15px;
 `;
+
+export const StyledLoader = styled.div`
+  width: 100vh;
+`;

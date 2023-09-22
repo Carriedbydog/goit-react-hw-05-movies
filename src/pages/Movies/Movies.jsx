@@ -11,6 +11,7 @@ import {
   StyledItem,
   StyledWrapper,
 } from './Movies.styled';
+import { Loader } from 'components/Loader/Loader';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +20,7 @@ const Movies = () => {
 
   const query = searchParams.get('query') || '';
 
-  const [data, _, loading] = useHttp(fetchMovieByQuery, query);
+  const [data, , loading] = useHttp(fetchMovieByQuery, query);
 
   const { register, handleSubmit } = useForm();
   const onSubmit = e => {
@@ -86,7 +87,7 @@ const Movies = () => {
         <h2>Oops...nothing there, try another movie</h2>
       ) : null}
       <div>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </div>

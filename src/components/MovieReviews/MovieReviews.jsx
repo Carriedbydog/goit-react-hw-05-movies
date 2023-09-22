@@ -10,6 +10,7 @@ import {
   StyledReviewList,
   StyledReviewWrapper,
 } from './MovieReviews.style';
+import { Loader } from 'components/Loader/Loader';
 
 const MovieReviews = () => {
   const { movieId } = useParams();
@@ -33,7 +34,7 @@ const MovieReviews = () => {
         </StyledReviewList>
       )}
       <div>
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </div>
