@@ -10,7 +10,7 @@ const MovieCats = () => {
   const [data] = useHttp(fetchMovieCast, movieId);
 
   if (!Object.keys(data).length) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
   return (
     <div>

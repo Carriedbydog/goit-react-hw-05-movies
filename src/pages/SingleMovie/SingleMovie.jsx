@@ -37,7 +37,7 @@ const SingleMovie = () => {
   const backLink = useRef(location.state?.from || '/');
 
   if (!Object.keys(data).length) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
 
   return (
