@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
   return (
@@ -7,11 +7,6 @@ const PageNotFound = () => {
       <div>
         <h1>Page not found</h1>
         <Link to={'/'}>Back to Home</Link>
-      </div>
-      <div>
-        <Suspense>
-          <Outlet />
-        </Suspense>
       </div>
     </>
   );

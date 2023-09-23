@@ -1,6 +1,5 @@
 import { useHttp } from 'hooks/useHttp';
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 import { fetchMovies } from 'services/api';
 import { StyledILi, StyledItemLink } from './HomePage.styled';
 
@@ -20,9 +19,6 @@ const HomePage = () => {
           );
         })}
       </ol>
-      <div>
-        <Outlet />
-      </div>
     </div>
   );
 };

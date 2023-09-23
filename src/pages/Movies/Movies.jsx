@@ -1,8 +1,8 @@
 import { useHttp } from 'hooks/useHttp';
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import { fetchMovieByQuery } from 'services/api';
 import { useForm } from 'react-hook-form';
-import { Link, Outlet, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -11,7 +11,6 @@ import {
   StyledItem,
   StyledWrapper,
 } from './Movies.styled';
-import { Loader } from 'components/Loader/Loader';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -86,11 +85,6 @@ const Movies = () => {
       {!data.length && query && !loading ? (
         <h2>Oops...nothing there, try another movie</h2>
       ) : null}
-      <div>
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
-      </div>
     </div>
   );
 };

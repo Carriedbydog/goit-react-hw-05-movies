@@ -1,6 +1,6 @@
 import { useHttp } from 'hooks/useHttp';
-import React, { Suspense } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { fetchMovieReviews } from 'services/api';
 import {
   StyledAuhtorName,
@@ -10,7 +10,6 @@ import {
   StyledReviewList,
   StyledReviewWrapper,
 } from './MovieReviews.style';
-import { Loader } from 'components/Loader/Loader';
 
 const MovieReviews = () => {
   const { movieId } = useParams();
@@ -33,11 +32,6 @@ const MovieReviews = () => {
           ))}
         </StyledReviewList>
       )}
-      <div>
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
-      </div>
     </StyledReviewWrapper>
   );
 };

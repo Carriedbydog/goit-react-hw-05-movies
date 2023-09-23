@@ -1,6 +1,6 @@
 import { useHttp } from 'hooks/useHttp';
-import React, { Suspense } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { fetchMovieCast } from 'services/api';
 import { StyledChar, StyledCharName, StyledList } from './MovieCasts.styled';
 import { Loader } from 'components/Loader/Loader';
@@ -42,11 +42,6 @@ const MovieCats = () => {
           ))}
         </StyledList>
       )}
-      <div>
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
-      </div>
     </div>
   );
 };
